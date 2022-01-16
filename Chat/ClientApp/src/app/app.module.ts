@@ -6,11 +6,11 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
-import { AuthInterceptor } from './AuthInterceptor/AuthInterceptor';
+import { LoginFormComponent } from './Components/login-form/login-form.component';
+import { SignUpFormComponent } from './Components/sign-up-form/sign-up-form.component';
+import { AuthInterceptor } from './Interceptors/AuthInterceptor/AuthInterceptor';
 import { LoginService } from './Services/Login/login.service';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './Components/home/home.component';
 
 @NgModule({
   declarations: [

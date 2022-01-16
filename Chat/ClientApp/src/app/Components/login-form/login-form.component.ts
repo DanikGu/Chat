@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { User } from '../models/User';
-import { LoginResponse } from '../models/LoginResponse';
-import { LoginService } from '../Services/Login/login.service';
+import { User } from '../../models/User';
+import { LoginResponse } from '../../models/LoginResponse';
+import { LoginService } from '../../Services/Login/login.service';
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',

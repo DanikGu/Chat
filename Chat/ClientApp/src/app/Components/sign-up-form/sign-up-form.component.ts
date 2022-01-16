@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginResponse } from '../models/LoginResponse';
-import { SignUpUser } from '../Models/SignUpUser';
-import { LoginService } from '../Services/Login/login.service';
+import { LoginResponse } from '../../models/LoginResponse';
+import { SignUpUser } from '../../Models/SignUpUser';
+import { LoginService } from '../../Services/Login/login.service';
 @Component({
   selector: 'app-sign-up-form',
   templateUrl: './sign-up-form.component.html',

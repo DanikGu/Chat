@@ -26,12 +26,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="ClientApp\src\app\login-form\**" />
+    <Compile Remove="ClientApp\src\app\Components\login-form\**" />
     <Content Remove="$(SpaRoot)**" />
-    <Content Remove="ClientApp\src\app\login-form\**" />
-    <EmbeddedResource Remove="ClientApp\src\app\login-form\**" />
+    <Content Remove="ClientApp\src\app\Components\login-form\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\Components\login-form\**" />
     <None Remove="$(SpaRoot)**" />
-    <None Remove="ClientApp\src\app\login-form\**" />
+    <None Remove="ClientApp\src\app\Components\login-form\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 

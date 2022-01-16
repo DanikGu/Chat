@@ -6,7 +6,7 @@ import {
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
-import { LoginService } from '../Services/Login/login.service';
+import { LoginService } from '../../Services/Login/login.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ) { }
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
-    if (!this.loginService.getUserIsLogedIn() && !req.url.includes("login") && !req.url.includes("sign-up")) {
+    if (!this.loginService.getUserIsLogedIn() && !req.url.toLowerCase().includes("login") && !req.url.toLowerCase().includes("signup")) {
       this.router.navigate(["login-form"]);
     }
     return next.handle(req).pipe(tap(() => { },

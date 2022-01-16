@@ -27,7 +27,7 @@ export class LoginService implements CanActivate  {
   public Logout():void {
     this.http.post<LoginResponse>(this.baseUrl + 'Login/Logout',
       {
-      });
+      }).subscribe();
     this.dropUserIsLogedIn();
   }
   public setUserIsLogedIn(): void {
