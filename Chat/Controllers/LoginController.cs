@@ -5,6 +5,7 @@ using AuthModule.Helpers;
 using AuthModule.Extensions;
 using System.Dynamic;
 using Microsoft.Extensions.Logging;
+using Chat.Models;
 
 namespace Chat.Controllers
 {
@@ -22,10 +23,10 @@ namespace Chat.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("SignIn")]
-        public JsonResult Login(LoginRecord loginUser)
+        public JsonResult SignIn(LoginUser loginUser)
         {
-            string userName = loginUser?.UserName ?? "";
-            string password = loginUser?.Password ?? "";
+            string userName = loginUser.UserName ?? "";
+            string password = loginUser.Password ?? "";
             User? user = _context?.User?.FirstOrDefault(user => user.UserName == userName && user.Password == CreateHashString.GetHashString(password));
             if (user == null) {
                 return new JsonResult(new { Succsess = false, Message = "User not found" } );
@@ -33,20 +34,17 @@ namespace Chat.Controllers
             else {
                 user.IsAuthenticated = true;
                 HttpContext.Session.Set("User", user);
-               // Response.Redirect(loginUser.RedirectUrl);
-                return new JsonResult(new { Succsess = true });
+                return new JsonResult(new { Succsess = true, UserId = user.Id });
             }
         }
         [HttpPost]
         [AllowAnonymous]
-        public JsonResult SignUp(dynamic signUpUser, string redirectUrl = "/") {
+        [Route("SignUp")]
+        public JsonResult SignUp(LoginUser signUpUser) {
             if (signUpUser == null) {
                 return new JsonResult(new { Succsess = false, Message = "User data are empty" });
             }
-            if (signUpUser.Password != signUpUser.SecondPassword) {
-                return new JsonResult(new { Succsess = false, Message = "Password are not the same" });
-            }
-            User newUser = new User()
+            User newUser = new()
             {
                 IsAuthenticated = true,
                 UserName = signUpUser.UserName,
@@ -55,14 +53,12 @@ namespace Chat.Controllers
             HttpContext.Session.Set("User", newUser);
             _context.User?.Add(newUser);
             _context.SaveChangesAsync();
-            Response.Redirect(redirectUrl);
-            return new JsonResult(new { Succsess = true });
+            return new JsonResult(new { Succsess = true, UserId = newUser.Id });
         }
         [Authorize(Roles = "User")]
-        public void Logout(string redirectUrl = "/") {
+        [Route("Logout")]
+        public void Logout() {
             HttpContext.Session.Set("User", new User());
-            Response.Redirect(redirectUrl);
         }
     }
-    public record LoginRecord(string UserName, string Password, string RedirectUrl);
 }

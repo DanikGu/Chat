@@ -12,12 +12,8 @@ namespace Chat.Controllers
         };
 
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController()
         {
-            _logger = logger;
-            logger.LogInformation(Url.ActionLink("Login", "Login"));
         }
 
         [HttpGet]

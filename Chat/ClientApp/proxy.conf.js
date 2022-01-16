@@ -8,7 +8,8 @@ const PROXY_CONFIG = [
     context: [
       "/weatherforecast",
       "/Login/SignIn",
-      "/Login"
+      "/Login/SignUp",
+      "/Login/Logout"
    ],
     target: target,
     secure: false
