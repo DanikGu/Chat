@@ -3,6 +3,8 @@ using AuthModule.Extensions;
 using AuthModule.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Chat.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,7 +21,7 @@ builder.Services.AddSession(
         options.Cookie.IsEssential = true;
     }
 );
-builder.Services.AddDbContext<UsersDbContext>(options =>
+builder.Services.AddDbContext<ChatDbContext>(options =>
                          options.UseSqlite(builder.Configuration.GetConnectionString("TestConnection")));
 
 

@@ -14,9 +14,9 @@ namespace Chat.Controllers
     [Route("Login")]
     public class LoginController : Controller
     {
-        private readonly UsersDbContext _context;
+        private readonly ChatDbContext _context;
 
-        public LoginController(UsersDbContext context)
+        public LoginController(ChatDbContext context)
         {
             _context = context;
         }
