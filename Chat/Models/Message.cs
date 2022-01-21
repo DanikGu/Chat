@@ -1,4 +1,5 @@
 ﻿using AuthModule.Model;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chat.Models
 {
@@ -7,12 +8,13 @@ namespace Chat.Models
         public int Id {  get; set; }
         public string Text {  get; set; }
         public string CreatedDate { get; set; }
+        [NotMapped]
         public DateTime CreatedDateValue {
             get {
                 return DateTime.Parse(CreatedDate);
             }
             set {
-                CreatedDate = value.ToLongDateString();
+                CreatedDate = value.ToString();
             }
         }
         public int SenderId { get; set; }

@@ -16,7 +16,8 @@ import { HomeComponent } from './Components/home/home.component';
   declarations: [
     AppComponent,
     LoginFormComponent,
-    SignUpFormComponent
+    SignUpFormComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

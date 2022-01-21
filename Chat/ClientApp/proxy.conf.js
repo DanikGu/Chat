@@ -8,8 +8,11 @@ const PROXY_CONFIG = [
     context: [
       "/Login/SignIn",
       "/Login/SignUp",
-      "/Login/Logout"
-   ],
+      "/Login/Logout",
+      "/Message/SendMessage",
+      "/Message/ReciveLastMessages",
+      "/Message/ReciveMessages"
+    ],
     target: target,
     secure: false
   }

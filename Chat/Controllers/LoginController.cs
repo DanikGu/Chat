@@ -44,6 +44,9 @@ namespace Chat.Controllers
             if (signUpUser == null) {
                 return new JsonResult(new { Succsess = false, Message = "User data are empty" });
             }
+            if (_context.User?.Any(user => user.UserName == signUpUser.UserName) ?? true) {
+                return new JsonResult(new { Succsess = false, Message = "User with such username exist" });
+            }
             User newUser = new()
             {
                 IsAuthenticated = true,

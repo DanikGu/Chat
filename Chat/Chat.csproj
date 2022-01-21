@@ -36,7 +36,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\Models\GetMessagesResponse.ts" />
     <None Remove="ClientApp\src\app\Models\LoginResponse.ts" />
+    <None Remove="ClientApp\src\app\Models\Message.ts" />
     <None Remove="ClientApp\src\app\Models\SignUpUser.ts" />
     <None Remove="ClientApp\src\app\Models\User.ts" />
   </ItemGroup>
@@ -49,11 +51,14 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\Services\Login\" />
+    <Folder Include="ClientApp\src\app\Services\Messages\" />
     <Folder Include="ClientApp\src\app\styles\" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\Models\GetMessagesResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\LoginResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Models\Message.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\SignUpUser.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\User.ts" />
   </ItemGroup>

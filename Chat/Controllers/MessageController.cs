@@ -19,18 +19,19 @@ namespace Chat.Controllers
         }
         [Authorize(Roles = "User")]
         [Route("SendMessage")]
-        public JsonResult SendMessage(string Message, int recipientId)
+        public JsonResult SendMessage(SendedMessage message)
         {
             try
             {
                 var mess = new Message()
                 {
-                    Text = Message,
+                    Text = message.message,
                     CreatedDateValue = DateTime.Now,
                     SenderId = Request.HttpContext.Session.Get<User>("User").Id,
-                    RecipientId = recipientId
+                    RecipientId = message.recipientId
                 };
                 _context.Message.Add(mess);
+                _context.SaveChangesAsync();
                 return new JsonResult(new { Succsess = true });
             } catch (Exception ex) {
                 return new JsonResult(new { Succsess = false, Message = ex.Message });
@@ -87,6 +88,7 @@ namespace Chat.Controllers
             }
         }
     }
+    public record SendedMessage(string message, int recipientId);
     public record MessagesFilter(int? SenderId, 
                                  int? RecipientId, 
                                  int? Skip, 
