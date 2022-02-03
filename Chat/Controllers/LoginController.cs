@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using AuthModule.Model;
 using AuthModule.Helpers;
-using AuthModule.Extensions;
+using AuthMiddlware.Extensions;
+using AuthMiddlware.Helpers;
 using System.Dynamic;
 using Microsoft.Extensions.Logging;
 using Chat.Models;
@@ -27,13 +27,14 @@ namespace Chat.Controllers
         {
             string userName = loginUser.UserName ?? "";
             string password = loginUser.Password ?? "";
-            User? user = _context?.User?.FirstOrDefault(user => user.UserName == userName && user.Password == CreateHashString.GetHashString(password));
+            User? user = _context?.Users?.FirstOrDefault(user => user.UserName == userName && user.Password == CreateHashString.GetHashString(password));
             if (user == null) {
                 return new JsonResult(new { Succsess = false, Message = "User not found" } );
             }
             else {
                 user.IsAuthenticated = true;
-                HttpContext.Session.Set("User", user);
+                new LoginLogoutHelper().Login(user, HttpContext);
+                //HttpContext.Session.Set("User", user);
                 return new JsonResult(new { Succsess = true, UserId = user.Id });
             }
         }
@@ -44,7 +45,7 @@ namespace Chat.Controllers
             if (signUpUser == null) {
                 return new JsonResult(new { Succsess = false, Message = "User data are empty" });
             }
-            if (_context.User?.Any(user => user.UserName == signUpUser.UserName) ?? true) {
+            if (_context.Users?.Any(user => user.UserName == signUpUser.UserName) ?? true) {
                 return new JsonResult(new { Succsess = false, Message = "User with such username exist" });
             }
             User newUser = new()
@@ -53,15 +54,17 @@ namespace Chat.Controllers
                 UserName = signUpUser.UserName,
                 Password = CreateHashString.GetHashString(signUpUser.Password)
             };
-            HttpContext.Session.Set("User", newUser);
-            _context.User?.Add(newUser);
+            new LoginLogoutHelper().Login(newUser, HttpContext);
+            //HttpContext.Session.Set("User", newUser);
+            _context.Users?.Add(newUser);
             _context.SaveChangesAsync();
             return new JsonResult(new { Succsess = true, UserId = newUser.Id });
         }
         [Authorize(Roles = "User")]
         [Route("Logout")]
         public void Logout() {
-            HttpContext.Session.Set("User", new User());
+            new LoginLogoutHelper().Logout(HttpContext);
+            //HttpContext.Session.Set("User", new User());
         }
     }
 }

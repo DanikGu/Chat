@@ -36,9 +36,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\Models\Chat.ts" />
     <None Remove="ClientApp\src\app\Models\GetMessagesResponse.ts" />
     <None Remove="ClientApp\src\app\Models\LoginResponse.ts" />
     <None Remove="ClientApp\src\app\Models\Message.ts" />
+    <None Remove="ClientApp\src\app\Models\SendMessageResponse.ts" />
     <None Remove="ClientApp\src\app\Models\SignUpUser.ts" />
     <None Remove="ClientApp\src\app\Models\User.ts" />
   </ItemGroup>
@@ -56,9 +58,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\Models\Chat.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\GetMessagesResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\LoginResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\Message.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Models\SendMessageResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\SignUpUser.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Models\User.ts" />
   </ItemGroup>

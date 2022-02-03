@@ -1,6 +1,6 @@
-using AuthModule.AuthMiddleware;
-using AuthModule.Extensions;
-using AuthModule.Model;
+using AuthMiddlware.AuthMiddleware;
+using AuthMiddlware.Extensions;
+using AuthMiddlware.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Chat.Models;

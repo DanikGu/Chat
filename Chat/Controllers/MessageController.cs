@@ -1,5 +1,5 @@
-﻿using AuthModule.Extensions;
-using AuthModule.Model;
+﻿using AuthMiddlware.Extensions;
+
 using Chat.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,11 +28,11 @@ namespace Chat.Controllers
                     Text = message.message,
                     CreatedDateValue = DateTime.Now,
                     SenderId = Request.HttpContext.Session.Get<User>("User").Id,
-                    RecipientId = message.recipientId
+                    ChatId = message.chatId
                 };
                 _context.Message.Add(mess);
                 _context.SaveChangesAsync();
-                return new JsonResult(new { Succsess = true });
+                return new JsonResult(new { Succsess = true, MessageId = mess.Id });
             } catch (Exception ex) {
                 return new JsonResult(new { Succsess = false, Message = ex.Message });
             }            
@@ -43,15 +43,20 @@ namespace Chat.Controllers
         {
             try
             {
+
                 var userId = Request.HttpContext.Session.Get<User>("User").Id;
+
+                var chats = _context.Chats.Where(chat => chat.Users.Any(user=> userId == user.Id)).AsEnumerable().ToList();
+                    
+                foreach(var chat in chats ?? new List<Models.Chat>()) {
+                    chat.Messages = _context.Message?.Where(m=> m.ChatId == chat.Id).ToList().OrderBy(chat => chat.CreatedDateValue).Take(20).ToList();
+                    chat.Messages.ToList().ForEach(m=> m.Chat = null);
+                }
+                //chats = null;
                 return new JsonResult(
-                    new { 
-                        Succsess = true,
-                        Messages = _context.Message.
-                                        Where(mess => mess.SenderId == userId || mess.RecipientId == userId).
-                                        AsEnumerable().
-                                        OrderByDescending(mess=> mess.CreatedDateValue).
-                                        Take(300).ToArray() 
+                    new {
+                            Succsess = true,
+                            Chats = chats
                         });
             } catch (Exception ex) {
                 return new JsonResult(new { Succsess = false, Message = ex.Message });
@@ -68,8 +73,9 @@ namespace Chat.Controllers
                         Succsess = true,
                         Messages = _context.Message.
                                         OrderByDescending(mess => mess.CreatedDateValue).
-                                        Where(mess => mess.SenderId      == (filter.SenderId ?? userId)&& 
-                                                       mess.RecipientId   == (filter.RecipientId ?? userId) &&
+                                        Where(mess =>  
+                                                       (filter.SenderId   == null || (filter.SenderId == mess.SenderId)) &&
+                                                       (filter.ChatId     == null || (filter.ChatId == mess.ChatId)) &&
                                                        (filter.SendSecond == null || (filter.SendSecond.Value.Second == mess.CreatedDateValue.Second)) &&
                                                        (filter.SendMinute == null || (filter.SendMinute.Value.Minute == mess.CreatedDateValue.Minute)) &&
                                                        (filter.SendHour   == null || (filter.SendHour.Value.Hour == mess.CreatedDateValue.Hour)) &&
@@ -88,9 +94,9 @@ namespace Chat.Controllers
             }
         }
     }
-    public record SendedMessage(string message, int recipientId);
+    public record SendedMessage(string message, int chatId);
     public record MessagesFilter(int? SenderId, 
-                                 int? RecipientId, 
+                                 int? ChatId, 
                                  int? Skip, 
                                  DateTime? SendSecond, 
                                  DateTime? SendMinute, 
