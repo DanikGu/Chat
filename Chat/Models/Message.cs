@@ -1,4 +1,4 @@
-﻿using AuthModule.Model;
+﻿using AuthMiddlware.Model;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chat.Models
@@ -19,7 +19,7 @@ namespace Chat.Models
         }
         public int SenderId { get; set; }
         public virtual User Sender { get; set; }
-        public int RecipientId { get; set; }
-        public virtual User Recipient { get; set; }
+        public int ChatId { get; set; }
+        public virtual Chat Chat { get; set; }
     }
 }
