@@ -1,16 +1,201 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --main-text-color: #03e9f4;
+  --secondary-text-color: #18dcff;
+  --common-text-color: #fff;
+  --input-text-color: #32ff00;
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+  --main-bg-color: linear-gradient(#141e30, #243b55);
+  --first-bg-color: #141e30;
+  --second-bg-color: #243b55;
+  --neon-border-color: #08f;
 }
 
-code {
-  color: #e01a76;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: var(--main-bg-color);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--main-text-color);
+}
+.neon-text-shadow {
+  text-shadow: 0 0 5px #fff,
+     0 0 10px var(--common-text-color),
+     0 0 15px var(--common-text-color),
+     0 0 20px var(--main-text-color),
+     0 0 30px var(--main-text-color),
+     0 0 40px var(--main-text-color),
+     0 0 50px var(--main-text-color),
+     0 0 75px var(--main-text-color);
+  font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+  letter-spacing: 3px;
+  color: var(--common-text-color)
+}
+.light-button {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: var(--main-text-color);
+  font-size: 16px;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  letter-spacing: 4px
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  .light-button:hover {
+    background: var(--main-text-color);
+    color: #fff !important;
+    border-radius: 5px;
+    box-shadow: 0 0 5px var(--main-text-color), 0 0 25px var(--main-text-color), 0 0 50px var(--main-text-color), 0 0 100px var(--main-text-color);
+  }
+  .light-button :nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--main-text-color));
+    animation: btn-anim1 1s linear infinite;
+  }
+
+  .light-button :nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, var(--main-text-color));
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+  }
+
+
+
+  .light-button :nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, var(--main-text-color));
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+  }
+
+
+  .light-button :nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, var(--main-text-color));
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+  }
+
+  .label-neon-button {
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: var(--common-text-color);
+    border: 0.4rem solid var(--common-text-color);
+    border-radius: 2rem;
+    text-transform: uppercase;
+    animation: flicker 1.5s infinite alternate;     
+    height: 75px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--main-bg-color);
+  }
+  .label-neon-button:hover {
+    animation: none;
+    box-shadow:
+    0 0 .5rem var(--common-text-color),
+    inset 0 0 .5rem var(--common-text-color),
+    0 0 2rem var(--neon-border-color),
+    inset 0 0 2rem var(--neon-border-color),
+    0 0 4rem var(--neon-border-color),
+    inset 0 0 4rem var(--neon-border-color);        
+  }
+  .label-neon-button::-moz-selection {
+    background-color: var(--neon-border-color);
+    color: var(--neon-text-color);
+  }
+  
+  .label-neon-button::selection {
+    background-color: var(--neon-border-color);
+    color: var(--neon-text-color);
+  }
+  
+  .label-neon-button:focus {
+    outline: none;
+  }
+  
+  /* Animate neon flicker */
+  @keyframes flicker {
+      
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        
+          text-shadow:
+              -0.2rem -0.2rem 1rem var(--common-text-color),
+              0.2rem 0.2rem 1rem var(--common-text-color),
+              0 0 2rem var(--neon-text-color),
+              0 0 4rem var(--neon-text-color),
+              0 0 6rem var(--neon-text-color),
+              0 0 8rem var(--neon-text-color),
+              0 0 10rem var(--neon-text-color);
+          
+          box-shadow:
+              0 0 .5rem var(--common-text-color),
+              inset 0 0 .5rem var(--common-text-color),
+              0 0 2rem var(--neon-border-color),
+              inset 0 0 2rem var(--neon-border-color),
+              0 0 4rem var(--neon-border-color),
+              inset 0 0 4rem var(--neon-border-color);        
+      }
+      /*
+      20%, 24%, 55% {        
+          text-shadow: none;
+          box-shadow: none;
+      } */   
+  }  
+@keyframes btn-anim1 {
+  0% {
+    left: -100%;
+  }
+
+  50%,100% {
+    left: 100%;
+  }
+}
+@keyframes btn-anim2 {
+  0% {
+    top: -100%;
+  }
+
+  50%,100% {
+    top: 100%;
+  }
+}
+@keyframes btn-anim3 {
+  0% {
+    right: -100%;
+  }
+
+  50%,100% {
+    right: 100%;
+  }
+}
+
+@keyframes btn-anim4 {
+  0% {
+    bottom: -100%;
+  }
+
+  50%,100% {
+    bottom: 100%;
+  }
 }
