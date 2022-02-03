@@ -1,31 +1,48 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule} from '@angular/core';
 import { Router } from '@angular/router';
 import { Message } from '../../Models/Message';
+import { Chat } from '../../Models/Chat';
 import { LoginService } from '../../Services/Login/login.service';
 import { MessagesService } from '../../Services/Messages/messages.service';
 import { CommonModule } from '@angular/common'
 import { GetMessagesResponse } from '../../Models/GetMessagesResponse';
-
+import { Observable } from 'rxjs/internal/Observable';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-
 export class HomeComponent {
   constructor(private messageService: MessagesService, private loginService: LoginService, private router: Router)
-  { }
+  {
+    this.getMessages();
+    this.userId = this.loginService.getUserId();
+   }
   public messages: Message[] = [];
   public getMessages() {
-    this.messageService.GetMessages().subscribe(result => this.messages = result.messages);
+    this.messageService.GetMessages().subscribe(result => this.chats = result.chats);
   }
+  public chats: Chat[] = [];
+  public currentChat: Chat = { id: -1, draftMessage: '', messages: [], name: '' };
+  public userId: number = 0;
   public sendMessage() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-    var time = today.getHours() + '/' + today.getMinutes() + '/' + today.getSeconds() + '/' + today.getMilliseconds();
-    var text = "testMessage" + mm + '/' + dd + '/' + yyyy + "   " + time;
-    this.messageService.SendMessage(text, 2).subscribe();
+    if (!this.currentChat.id) { return; }
+    var message = {
+      senderId: this.userId,
+      text: this.currentChat.draftMessage,
+      chatId: this.currentChat.id,
+      createdDate: '',
+      id: -1
+    };
+    this.messageService.
+      SendMessage(this.currentChat.draftMessage, this.currentChat.id).
+      subscribe(res => message.id = res.messageId);
+    this.currentChat.messages.push(message);
+    this.currentChat.draftMessage = '';
+  }
+
+  public chooseChat(chat: Chat) {
+    this.currentChat = chat;
   }
   public Logout(): void {
     this.router.navigate(['login-form']);

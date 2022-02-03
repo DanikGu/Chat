@@ -3,5 +3,5 @@ export interface Message {
   text: string;
   createdDate: string;
   senderId: number;
-  recipientId: number;
+  chatId: number;
 }

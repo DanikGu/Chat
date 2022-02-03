@@ -30,8 +30,9 @@ export class LoginService implements CanActivate  {
       }).subscribe();
     this.dropUserIsLogedIn();
   }
-  public setUserIsLogedIn(): void {
+  public setUserIsLogedIn(userId: number): void {
     localStorage.setItem("userLogedIn", JSON.stringify(true));
+    localStorage.setItem("userId", JSON.stringify(userId));
   }
   public dropUserIsLogedIn(): void {
     localStorage.removeItem("userLogedIn");
@@ -42,6 +43,14 @@ export class LoginService implements CanActivate  {
       return JSON.parse(value);
     } else {
       return false;
+    }
+  }
+  public getUserId(): number  {
+    var value = localStorage.getItem("userId");
+    if (value) {
+      return JSON.parse(value);
+    } else {
+      return -1;
     }
   }
   public canActivate() {

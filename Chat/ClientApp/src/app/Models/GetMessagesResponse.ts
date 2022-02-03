@@ -1,6 +1,6 @@
-import { Message } from "./Message";
+import { Chat } from "./Chat";
 
 export interface GetMessagesResponse {
-  succsess: number;
-  messages: Message[];
+  succsess: boolean;
+  chats: Chat[];
 }

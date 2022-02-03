@@ -25,7 +25,7 @@ export class SignUpFormComponent {
   }
   SignUpResult(response: LoginResponse) {
     if (response && response.succsess) {
-      this.loginService.setUserIsLogedIn();
+      this.loginService.setUserIsLogedIn(response.userId);
       this.router.navigateByUrl('/');
     }
   }
