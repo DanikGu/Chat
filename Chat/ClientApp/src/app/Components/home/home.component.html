@@ -1,11 +1,15 @@
 <div class="main-container">
   <div class="chats-panel">
     <div class="chats-title neon-text-shadow h4">Your chats here</div>
-    <div class="chats-container sc2" *ngIf="chats ; else noChats">
+    <div class="chats-container sc2" *ngIf="chats.length > 0 ; else noChats">
       <div class="chat" *ngFor="let chat of chats" (click)="chooseChat(chat)">
         <div class="chat-sender-name">@{{chat.name}}</div>
         <div class="chat-last-message" *ngIf="chat.messages[0]; else noLastMessage">
-          {{chat.messages[0]?.text}}
+          {{
+            (chat.messages[chat.messages.length - 1]?.text?.length ?? 0 ) > 35 ?
+                chat.messages[chat.messages.length - 1]?.text?.substring(0,35) + '...':
+                chat.messages[chat.messages.length - 1]?.text
+          }}
         </div>
         <ng-template #noLastMessage>
           <div class="chat-last-message">
@@ -22,7 +26,7 @@
   </div>
   <div class="messenger-main-panel">
     <div class="current-chat-title neon-text-shadow h4">{{currentChat.name}}</div>
-    <div class="messages-container" *ngIf="currentChat; else noCurrentChat">
+    <div class="messages-container sc2" *ngIf="currentChat.id != -1 ; else noCurrentChat">
       <div class="{{message.senderId == userId ? 'my-messages': 'other-messages'}}" *ngFor="let message of currentChat.messages">
         {{message.text}}
       </div>
@@ -46,13 +50,3 @@
     </ul>
   </div>
 </div>
-
-
-
-
-<ul style="background-color:black; display:none; color:greenyellow">
-  <li *ngFor="let message of messages">{{message.text}}</li>
-</ul>
-<button (click)="Logout()" style="display:none">Log out</button>
-<button (click)="getMessages()" style="display:none">Get messages</button>
-<button (click)="sendMessage()" style="display:none">Send messages</button>
