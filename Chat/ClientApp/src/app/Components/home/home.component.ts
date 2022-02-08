@@ -26,7 +26,7 @@ export class HomeComponent {
   public currentChat: Chat = { id: -1, draftMessage: '', messages: [], name: '' };
   public userId: number = 0;
   public sendMessage() {
-    if (!this.currentChat.id) { return; }
+    if (!this.currentChat.id || !this.currentChat.draftMessage) { return; }
     var message = {
       senderId: this.userId,
       text: this.currentChat.draftMessage,
