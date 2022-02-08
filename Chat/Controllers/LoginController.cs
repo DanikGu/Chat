@@ -34,7 +34,6 @@ namespace Chat.Controllers
             else {
                 user.IsAuthenticated = true;
                 new LoginLogoutHelper().Login(user, HttpContext);
-                //HttpContext.Session.Set("User", user);
                 return new JsonResult(new { Succsess = true, UserId = user.Id });
             }
         }
@@ -55,7 +54,6 @@ namespace Chat.Controllers
                 Password = CreateHashString.GetHashString(signUpUser.Password)
             };
             new LoginLogoutHelper().Login(newUser, HttpContext);
-            //HttpContext.Session.Set("User", newUser);
             _context.Users?.Add(newUser);
             _context.SaveChangesAsync();
             return new JsonResult(new { Succsess = true, UserId = newUser.Id });
@@ -64,7 +62,6 @@ namespace Chat.Controllers
         [Route("Logout")]
         public void Logout() {
             new LoginLogoutHelper().Logout(HttpContext);
-            //HttpContext.Session.Set("User", new User());
         }
     }
 }
