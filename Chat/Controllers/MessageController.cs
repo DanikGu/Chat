@@ -49,7 +49,7 @@ namespace Chat.Controllers
                 var chats = _context.Chats.Where(chat => chat.Users.Any(user=> userId == user.Id)).AsEnumerable().ToList();
                                       
                 foreach(var chat in chats ?? new List<Models.Chat>()) {
-                    chat.Messages = _context.Message?.Where(m=> m.ChatId == chat.Id).ToList().OrderBy(chat => chat.CreatedDateValue).Take(20).ToList();
+                    chat.Messages = _context.Message?.Where(m=> m.ChatId == chat.Id).ToList().OrderByDescending(chat => chat.CreatedDateValue).Take(100).ToList();
                     chat.Messages.ToList().ForEach(m=> m.Chat = null);
                 }
                 //chats = null;

@@ -6,9 +6,9 @@
         <div class="chat-sender-name">@{{chat.name}}</div>
         <div class="chat-last-message" *ngIf="chat.messages[0]; else noLastMessage">
           {{
-            (chat.messages[chat.messages.length - 1]?.text?.length ?? 0 ) > 35 ?
-                chat.messages[chat.messages.length - 1]?.text?.substring(0,35) + '...':
-                chat.messages[chat.messages.length - 1]?.text
+            (chat.messages[0]?.text?.length ?? 0 ) > 35 ?
+                chat.messages[0]?.text?.substring(0,35) + '...':
+                chat.messages[0]?.text
           }}
         </div>
         <ng-template #noLastMessage>

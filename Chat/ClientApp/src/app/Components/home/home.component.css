@@ -1,4 +1,4 @@
-﻿/*#region main page container*/
+/*#region main page container*/
 
 .main-container {
     height: 100vh;
@@ -110,8 +110,8 @@
 .messages-container {
   display: flex;
   margin-top: auto;
-  flex-direction: column;
-  width:75% ;
+  flex-direction: column-reverse;
+  width: 75%;
   overflow-y: auto;
   padding-right: 15px;
   padding-left: 15px;

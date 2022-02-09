@@ -37,7 +37,7 @@ export class HomeComponent {
     this.messageService.
       SendMessage(this.currentChat.draftMessage, this.currentChat.id).
       subscribe(res => message.id = res.messageId);
-    this.currentChat.messages.push(message);
+    this.currentChat.messages.unshift(message);
     this.currentChat.draftMessage = '';
   }
 
